@@ -2,12 +2,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>종합 업무적성 및 명리 진단 시스템</title>
     <!-- 카카오톡, SNS 공유용 오픈그래프(OG) 메타 태그 설정 -->
     <meta property="og:title" content="☯️ 업무적성 x 사주 명리학 종합 진단">
     <meta property="og:description" content="현대 심리 이론(홀랜드)과 동양 전통 명리학을 결합하여 나의 숨겨진 천직과 사주 기운을 정밀 분석합니다.">
-    <!-- ⚠️ 중요: 아래 URL들은 깃허브 배포 주소(예: https://username.github.io/repo-name/thumbnail.png)로 변경해줘야 완벽하게 작동해! -->
+    <!-- ⚠️ 중요: 아래 URL들은 깃허브 배포 주소로 변경하면 최적으로 작동합니다. -->
     <meta property="og:image" content="https://shinjiikari90.github.io/RAISECnSAJU/thumbnail.png">
     <!-- Pretendard 폰트 단독 및 완전 통일 임포트 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -17,13 +17,13 @@
         :root {
             /* 과학적으로 검증된 이성적 신뢰감과 전통적 품격의 네이비&골드 테마 */
             --bg-primary: #0b132a;        /* 심층적인 신뢰감과 권위를 주는 다크 딥 블루 */
-            --bg-secondary: #16223f;      /* 안정적인 면접실/실험실 분위기를 조성하는 짙은 네이비 */
+            --bg-secondary: #16223f;      /* 안정적인 분위기를 조성하는 짙은 네이비 */
             --text-main: #f8fafc;         /* 가독성이 검증된 최고 등급 미색 */
             --text-muted: #94a3b8;        /* 시각적 인지 부하를 줄여주는 뮤티드 그레이 */
-            --accent-gold: #c5a880;       /* 전통의 깊이와 고급 감각을 더하는 샴페인 안틱 골드 */
+            --accent-gold: #c5a880;       /* 전통의 깊이와 고급 감각을 더하는 안틱 골드 */
             --accent-bronze: #a3845b;     /* 보조 브론즈 골드 */
             --accent-teal: #0f766e;       /* 분석과 이성적 판단을 이끄는 전문적인 딥 틸 블루 */
-            --accent-rose: #9f1239;       /* 경고 및 집중 관리를 위한 딥 로즈 레드 */
+            --accent-rose: #9f1239;       /* 경고 및 기피 항목을 시각화하는 딥 로즈 레드 */
             --card-border: rgba(197, 168, 128, 0.2);
             --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
         }
@@ -32,18 +32,25 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-family) !important; /* 모든 요소의 서체를 프레텐다드로 강제 통일 */
+            font-family: var(--font-family) !important; /* 모든 서체 통일 */
+            -webkit-tap-highlight-color: transparent; /* 모바일 터치 하이라이트 제거 */
         }
 
         body {
             background-color: var(--bg-primary);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 40px 20px;
+            padding: 16px 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+        }
+
+        @media (min-width: 640px) {
+            body {
+                padding: 40px 20px;
+            }
         }
 
         .container {
@@ -51,57 +58,102 @@
             width: 100%;
             background: var(--bg-secondary);
             border: 1px solid var(--card-border);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            padding: 45px;
+            padding: 20px 16px;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                border-radius: 24px;
+                padding: 45px;
+            }
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             border-bottom: 1.5px solid var(--card-border);
-            padding-bottom: 35px;
+            padding-bottom: 20px;
+        }
+
+        @media (min-width: 640px) {
+            header {
+                margin-bottom: 40px;
+                padding-bottom: 35px;
+            }
         }
 
         header h1 {
-            font-size: 34px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--accent-gold);
-            letter-spacing: -0.75px;
-            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            word-break: keep-all;
+        }
+
+        @media (min-width: 640px) {
+            header h1 {
+                font-size: 34px;
+                letter-spacing: -0.75px;
+            }
         }
 
         header p {
-            font-size: 16px;
+            font-size: 13px;
             color: var(--text-muted);
             font-weight: 400;
+            word-break: keep-all;
+            margin-bottom: 4px;
+        }
+
+        @media (min-width: 640px) {
+            header p {
+                font-size: 16px;
+            }
         }
 
         .section-title {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--accent-gold);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .section-title {
+                font-size: 22px;
+                margin-bottom: 25px;
+            }
         }
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            margin-bottom: 35px;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        @media (min-width: 640px) {
+            .info-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 25px;
+                margin-bottom: 35px;
+            }
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .form-group label {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-muted);
         }
@@ -110,11 +162,12 @@
             background: #090d16;
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
-            padding: 14px;
+            padding: 12px;
             color: var(--text-main);
             font-size: 15px;
             outline: none;
             transition: all 0.3s ease;
+            -webkit-appearance: none; /* iOS 스타일 기본화 */
         }
 
         .form-group input:focus, .form-group select:focus {
@@ -123,12 +176,19 @@
         }
 
         .progress-container {
-            margin-bottom: 35px;
+            margin-bottom: 25px;
             background: #090d16;
             border-radius: 10px;
-            height: 12px;
+            height: 8px;
             overflow: hidden;
             position: relative;
+        }
+
+        @media (min-width: 640px) {
+            .progress-container {
+                height: 12px;
+                margin-bottom: 35px;
+            }
         }
 
         .progress-bar {
@@ -141,69 +201,143 @@
         .question-card {
             background: #0f182c;
             border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 14px;
-            padding: 28px;
-            margin-bottom: 25px;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
+        @media (min-width: 640px) {
+            .question-card {
+                border-radius: 16px;
+                padding: 28px;
+                margin-bottom: 25px;
+            }
+        }
+
         .question-card:hover {
-            transform: translateY(-2px);
             border-color: rgba(197, 168, 128, 0.25);
         }
 
         .question-text {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             color: #f1f5f9;
+            line-height: 1.5;
+            word-break: keep-all;
         }
 
-        .options-group {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
+        @media (min-width: 640px) {
+            .question-text {
+                font-size: 17px;
+                margin-bottom: 22px;
+            }
         }
 
-        .option-btn {
+        /* 모바일 최적화: 가로 공간 부족 시 찌그러지는 5지 선다 버튼을 원형 노드 스케일로 혁신 */
+        .scale-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scale-buttons {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            padding: 0 4px;
+        }
+
+        /* 척도 사이를 이어주는 뒷배경 라인 */
+        .scale-buttons::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            right: 15px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.08);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .scale-btn {
+            width: 44px; /* 모바일 터치 최적 타겟 크기 */
+            height: 44px;
+            border-radius: 50%;
             background: #090d16;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.12);
             color: var(--text-muted);
-            border-radius: 10px;
-            padding: 14px 8px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
+            z-index: 2;
             user-select: none;
         }
 
-        .option-btn:hover {
+        @media (min-width: 640px) {
+            .scale-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+        }
+
+        .scale-btn:hover {
             border-color: var(--accent-gold);
             color: var(--text-main);
         }
 
-        .option-btn.selected {
+        .scale-btn.selected {
             background: var(--accent-gold);
             color: #0b132a;
-            font-weight: 700;
+            font-weight: 800;
             border-color: var(--accent-gold);
-            box-shadow: 0 4px 15px rgba(197, 168, 128, 0.3);
+            box-shadow: 0 0 15px rgba(197, 168, 128, 0.4);
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 0 4px;
+        }
+
+        @media (min-width: 640px) {
+            .scale-labels {
+                font-size: 13px;
+                padding: 0 8px;
+            }
         }
 
         .btn-container {
             display: flex;
-            justify-content: space-between;
-            margin-top: 35px;
-            gap: 20px;
+            flex-direction: column-reverse; /* 모바일에서 이전 버튼이 밑으로 가지 않고 세로 배치되도록 조절 */
+            margin-top: 25px;
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .btn-container {
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 35px;
+                gap: 20px;
+            }
         }
 
         .btn {
-            flex: 1;
-            padding: 16px 24px;
+            width: 100%;
+            padding: 15px 20px;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -212,6 +346,14 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .btn {
+                flex: 1;
+                font-size: 16px;
+                padding: 16px 24px;
+            }
         }
 
         .btn-primary {
@@ -242,45 +384,78 @@
         .result-block {
             background: #0f182c;
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 35px;
-            margin-bottom: 30px;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .result-block {
+                border-radius: 16px;
+                padding: 35px;
+                margin-bottom: 30px;
+            }
         }
 
         .result-block h3 {
-            font-size: 21px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--accent-gold);
-            margin-bottom: 25px;
+            margin-bottom: 18px;
             border-bottom: 1.5px solid rgba(197, 168, 128, 0.15);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            word-break: keep-all;
+        }
+
+        @media (min-width: 640px) {
+            .result-block h3 {
+                font-size: 21px;
+                margin-bottom: 25px;
+                padding-bottom: 12px;
+            }
         }
 
         .chart-wrapper {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .chart-row {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .chart-label-group {
             display: flex;
-            justify-content: space-between;
-            font-size: 14px;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 640px) {
+            .chart-label-group {
+                flex-direction: row;
+                justify-content: space-between;
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
         }
 
         .chart-bar-bg {
             background: #090d16;
             border-radius: 8px;
-            height: 18px;
+            height: 14px;
             width: 100%;
             overflow: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .chart-bar-bg {
+                height: 18px;
+            }
         }
 
         .chart-bar-fill {
@@ -293,17 +468,40 @@
 
         .saju-elements-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr); /* 모바일에서는 2컬럼 배치 */
+            gap: 8px;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .saju-elements-grid {
+                grid-template-columns: repeat(5, 1fr); /* 데스크탑에서는 5컬럼 한 줄 배치 */
+                gap: 12px;
+                margin-bottom: 25px;
+            }
         }
 
         .element-card {
-            padding: 16px 8px;
-            border-radius: 10px;
+            padding: 12px 6px;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 13px;
+        }
+
+        /* 5번째 오행 요소는 모바일에서 전체 너비를 가득 채워 그리드 균형 유지 */
+        @media (max-width: 639px) {
+            .element-card:last-child {
+                grid-column: span 2;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .element-card {
+                padding: 16px 8px;
+                border-radius: 10px;
+                font-size: 15px;
+            }
         }
 
         .elem-wood { background: #133c30; color: #6ee7b7; }
@@ -316,36 +514,72 @@
             font-style: italic;
             color: var(--text-muted);
             text-align: center;
-            margin: 30px 0;
-            line-height: 1.8;
+            margin: 20px 0;
+            line-height: 1.7;
             border-left: 4px solid var(--accent-gold);
-            padding-left: 20px;
-            font-size: 15px;
+            padding-left: 12px;
+            font-size: 13.5px;
+            word-break: keep-all;
+        }
+
+        @media (min-width: 640px) {
+            .mystic-quote {
+                margin: 30px 0;
+                line-height: 1.8;
+                padding-left: 20px;
+                font-size: 15px;
+            }
         }
 
         .bold-lead {
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 10px;
-            font-size: 16px;
+            margin-bottom: 8px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            word-break: keep-all;
+        }
+
+        @media (min-width: 640px) {
+            .bold-lead {
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
         }
 
         .desc-text {
             color: #cbd5e1;
-            font-size: 15.5px;
-            margin-bottom: 20px;
+            font-size: 14px;
+            margin-bottom: 18px;
             text-align: justify;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        @media (min-width: 640px) {
+            .desc-text {
+                font-size: 15.5px;
+                margin-bottom: 20px;
+            }
         }
 
         .retake-area {
             text-align: center;
-            margin-top: 45px;
+            margin-top: 30px;
+        }
+
+        @media (min-width: 640px) {
+            .retake-area {
+                margin-top: 45px;
+            }
         }
 
         .retake-area .btn {
             display: inline-flex;
             width: auto;
-            min-width: 250px;
+            min-width: 220px;
         }
     </style>
 </head>
@@ -390,7 +624,6 @@
             </div>
         </div>
         <div class="btn-container">
-            <div></div> <!-- Spacer -->
             <button class="btn btn-primary" onclick="startSurvey()">적성진단 시작하기 <i class="fa-solid fa-arrow-right"></i></button>
         </div>
     </div>
@@ -411,8 +644,8 @@
     <!-- STEP 3: 고도로 상세화된 다면 분석 보고서 -->
     <div id="step-result" class="result-layout">
         <header>
-            <h1 style="color: var(--accent-gold);"><i class="fa-solid fa-scroll"></i> 종합 직무 및 명조 진단서</h1>
-            <p id="resultMetaInfo" style="font-size: 15px;"></p>
+            <h1 style="color: var(--accent-gold); font-size: 22px;"><i class="fa-solid fa-scroll"></i> 종합 직무 및 명조 진단서</h1>
+            <p id="resultMetaInfo" style="font-size: 13px;"></p>
         </header>
 
         <!-- 1. 학술적 적성 분석 리포트 -->
@@ -482,7 +715,7 @@
             </div>
 
             <!-- 최고 적성 유형에 대한 구체적인 정성 설명 -->
-            <div id="academicDetailedDesc" style="margin-top: 25px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 20px;">
+            <div id="academicDetailedDesc" style="margin-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 20px;">
                 <!-- 동적 스크립팅 주입 -->
             </div>
         </div>
@@ -498,7 +731,7 @@
                 <div class="element-card elem-water" id="saju_water">水: --%</div>
             </div>
             
-            <p id="sajuYinYangText" style="font-weight: 600; color: var(--accent-gold); margin-bottom: 20px; text-align: center; font-size: 17px;"></p>
+            <p id="sajuYinYangText" style="font-weight: 600; color: var(--accent-gold); margin-bottom: 15px; text-align: center; font-size: 15px; word-break: keep-all;"></p>
             <div id="sajuDetailedDesc">
                 <!-- 동적 스크립팅 주입 -->
             </div>
@@ -624,34 +857,42 @@
             qText.className = "question-text";
             qText.innerText = `${q.id}. ${q.text}`;
 
-            const optGroup = document.createElement("div");
-            optGroup.className = "options-group";
+            const scaleContainer = document.createElement("div");
+            scaleContainer.className = "scale-container";
 
-            const scoreLabels = [
-                { val: 1, label: "전혀 아님" },
-                { val: 2, label: "아님" },
-                { val: 3, label: "보통" },
-                { val: 4, label: "그럼" },
-                { val: 5, label: "매우 그럼" }
-            ];
+            const scaleButtons = document.createElement("div");
+            scaleButtons.className = "scale-buttons";
 
-            scoreLabels.forEach(opt => {
+            // 1부터 5까지의 숫자 노드 버튼 생성
+            for (let val = 1; val <= 5; val++) {
                 const btn = document.createElement("div");
-                btn.className = `option-btn ${savedValue === opt.val ? 'selected' : ''}`;
-                btn.innerText = opt.label;
+                btn.className = `scale-btn ${savedValue === val ? 'selected' : ''}`;
+                btn.innerText = val;
                 btn.onclick = () => {
-                    userAnswers[q.id] = opt.val;
-                    const siblings = optGroup.children;
+                    userAnswers[q.id] = val;
+                    const siblings = scaleButtons.children;
                     for (let sibling of siblings) {
                         sibling.classList.remove("selected");
                     }
                     btn.classList.add("selected");
                 };
-                optGroup.appendChild(btn);
-            });
+                scaleButtons.appendChild(btn);
+            }
+
+            // 하단 텍스트 가이드 라벨
+            const scaleLabels = document.createElement("div");
+            scaleLabels.className = "scale-labels";
+            scaleLabels.innerHTML = `
+                <span>전혀 아님</span>
+                <span>보통</span>
+                <span>매우 그럼</span>
+            `;
+
+            scaleContainer.appendChild(scaleButtons);
+            scaleContainer.appendChild(scaleLabels);
 
             qCard.appendChild(qText);
-            qCard.appendChild(optGroup);
+            qCard.appendChild(scaleContainer);
             container.appendChild(qCard);
         }
 
@@ -772,11 +1013,11 @@
         const currentRIASEC = (maxType === "C") ? riasecDB.CustomC : riasecDB[maxType];
 
         let academicHTML = `
-            <div class="bold-lead" style="font-size: 19px; color: var(--accent-gold); margin-bottom: 12px;">
+            <div class="bold-lead" style="font-size: 18px; color: var(--accent-gold); margin-bottom: 12px;">
                 최우수 진단 적성 유형: ${currentRIASEC.title}
             </div>
             <p class="desc-text">${currentRIASEC.desc}</p>
-            <div class="bold-lead"><i class="fa-solid fa-briefcase"></i> 추천 진무 스펙트럼</div>
+            <div class="bold-lead"><i class="fa-solid fa-briefcase"></i> 추천 직무 스펙트럼</div>
             <p class="desc-text" style="color: var(--accent-gold); font-weight: 600;">${currentRIASEC.jobs}</p>
             <div class="bold-lead"><i class="fa-solid fa-users"></i> 이 적성 유형을 대표하는 시대적 인물</div>
             <p class="desc-text" style="font-style: italic; color: var(--text-muted);">${currentRIASEC.figures}</p>
@@ -810,7 +1051,7 @@
         const elementsData = [
             { name: "木", label: "목(木) 기운 - 창조와 무한 성장의 활력", value: shuffledRatios[0], colorClass: "elem-wood", desc: "단단한 동토를 뚫고 솟구치는 어린 새싹의 생명력입니다. 업무적 기획, 전무후무한 크리에이티브 창작, 무(無)에서 유(有)를 빚는 예술가적 추진력을 책임집니다." },
             { name: "火", label: "화(火) 기운 - 정열적인 발산과 대외 소통의 빛", value: shuffledRatios[1], colorClass: "elem-fire", desc: "자신을 온 세상에 널리 표명하여 타인을 사로잡는 뜨거움입니다. 미디어 노출, 대외 세일즈, 마케팅 전략, 투자 유치 프레젠테이션처럼 화려한 무대 기질을 활성화합니다." },
-            { name: "土", label: "토(土) 기운 - 두터운 신용과 중재력의 대지", value: shuffledRatios[2], colorClass: "elem-earth", desc: "모든 오행을 품어주고 조화롭게 상생을 이루는 너그러운 흙입니다. 백오피스의 정밀 제어, VIP 보좌 및 비서 임무, 사내 HR 갈등 조율 등 무한한 보살핌의 역량을 선사합니다." },
+            { name: "土", label: "토(土) 기운 - 두터운 신용과 중재력의 대지", value: shuffledRatios[2], colorClass: "elem-earth", desc: "모든 오행을 품어주고 조화롭게 상생을 이루는 너너러운 흙입니다. 백오피스의 정밀 제어, VIP 보좌 및 비서 임무, 사내 HR 갈등 조율 등 무한한 보살핌의 역량을 선사합니다." },
             { name: "金", label: "금(金) 기운 - 서슬 퍼런 결단과 숙살(肅殺)의 가위", value: shuffledRatios[3], colorClass: "elem-metal", desc: "불순물을 가차 없이 잘라내어 극도의 완성도를 세우는 쇳소리입니다. 품질 감사, 예산의 입증, 정밀 기계 엔지니어링, 하드웨어 작동 및 감사 직책에 강력한 엄격함을 부여합니다." },
             { name: "水", label: "수(水) 기운 - 유려한 지혜와 심원한 탐구의 깊이", value: shuffledRatios[4], colorClass: "elem-water", desc: "세상의 보이지 않는 모든 고랑을 흘러들어 본질을 밝히는 차가운 물입니다. 거시 데이터 마이닝, 장기적 분석 연구, 기업 전산 아카이빙 구축 및 연구 개발에 고도의 이성을 선사합니다." }
         ];
@@ -829,7 +1070,7 @@
 
         let sajuHTML = `
             <p class="desc-text" style="border-bottom: 1.5px solid rgba(255,255,255,0.05); padding-bottom: 20px;">${yinYangMysticDesc}</p>
-            <div class="bold-lead" style="color: var(--accent-gold); font-size: 18px;"><i class="fa-solid fa-moon"></i> 타고난 지배적 제1 기운: ${maxElem.label}</div>
+            <div class="bold-lead" style="color: var(--accent-gold); font-size: 17px;"><i class="fa-solid fa-moon"></i> 타고난 지배적 제1 기운: ${maxElem.label}</div>
             <p class="desc-text">${maxElem.desc}</p>
             
             <div class="mystic-quote">
@@ -869,7 +1110,7 @@
         let crossHTML = "";
         if (isHarmonized) {
             crossHTML = `
-                <div class="bold-lead" style="font-size: 19px; color: var(--accent-gold); text-align: center; margin-bottom: 20px;">
+                <div class="bold-lead" style="font-size: 17px; color: var(--accent-gold); text-align: center; margin-bottom: 20px; display: block; width: 100%;">
                     🎯 [화합지상] 학술 적성 [${maxType}] x 사주 기운 [${maxElem.name}] = ${matchStatus}
                 </div>
                 <p class="desc-text">
@@ -890,7 +1131,7 @@
             `;
         } else {
             crossHTML = `
-                <div class="bold-lead" style="font-size: 19px; color: #f43f5e; text-align: center; margin-bottom: 20px;">
+                <div class="bold-lead" style="font-size: 17px; color: #f43f5e; text-align: center; margin-bottom: 20px; display: block; width: 100%;">
                     💥 [반전지상] 학술 적성 [${maxType}] x 사주 기운 [${maxElem.name}] = ${matchStatus}
                 </div>
                 <p class="desc-text">
@@ -915,8 +1156,8 @@
 
         const ageMsg = birthDate ? `${birthDate} 태생` : "알 수 없음";
         document.getElementById("resultMetaInfo").innerHTML = `
-            <strong>${userName}</strong> 님의 영적·학술적 다면 감정 리포트 
-            <span style="color: var(--accent-gold); margin-left: 10px;">(${ageMsg})</span>
+            <strong>${userName}</strong> 님의 다면 분석 결과 
+            <span style="color: var(--accent-gold); margin-left: 5px;">(${ageMsg})</span>
         `;
     }
 

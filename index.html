@@ -105,12 +105,15 @@
             color: var(--text-muted);
             font-weight: 400;
             word-break: keep-all;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+            text-align: left; /* 모바일 가독성을 위해 왼쪽 정렬로 개선 */
         }
 
         @media (min-width: 640px) {
             header p {
                 font-size: 16px;
+                text-align: center; /* 데스크탑에서는 대칭적 중심 정렬 유지 */
+                margin-bottom: 4px;
             }
         }
 
@@ -168,6 +171,9 @@
             outline: none;
             transition: all 0.3s ease;
             -webkit-appearance: none; /* iOS 스타일 기본화 */
+            height: 48px; /* 모바일 기기별 렌더링 편차 방지를 위해 명시적 높이 고정 */
+            box-sizing: border-box; /* 높이에 패딩이 덧대어지지 않도록 설정 */
+            line-height: 1.2;
         }
 
         .form-group input:focus, .form-group select:focus {
@@ -636,8 +642,8 @@
         <h2 class="section-title" id="surveyStepTitle">진단 문항 진행중</h2>
         <div id="quizContainer"></div>
         <div class="btn-container">
-            <button class="btn btn-secondary" id="btnPrev" onclick="prevPage()"><i class="fa-solid fa-chevron-left"></i> 이전</button>
-            <button class="btn btn-primary" id="btnNext" onclick="nextPage()">다음 <i class="fa-solid fa-chevron-right"></i></button>
+            <button class="btn btn-secondary" id="btnPrev" onclick="prevPage()"><i class="fa-solid fa-arrow-left"></i> 이전</button>
+            <button class="btn btn-primary" id="btnNext" onclick="nextPage()">다음 <i class="fa-solid fa-arrow-right"></i></button>
         </div>
     </div>
 
@@ -900,7 +906,7 @@
         if (currentPage === totalPages - 1) {
             document.getElementById("btnNext").innerHTML = `종합 결과 추출 <i class="fa-solid fa-wand-magic-sparkles"></i>`;
         } else {
-            document.getElementById("btnNext").innerHTML = `다음 <i class="fa-solid fa-chevron-right"></i>`;
+            document.getElementById("btnNext").innerHTML = `다음 <i class="fa-solid fa-arrow-right"></i>`;
         }
     }
 

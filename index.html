@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>종합 업무적성 및 명리 진단 시스템</title>
+    <!-- Pretendard 폰트 단독 및 완전 통일 임포트 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* 과학적으로 검증된 이성적 신뢰감과 전통적 품격의 네이비&골드 테마 */
+            --bg-primary: #0b132a;        /* 심층적인 신뢰감과 권위를 주는 다크 딥 블루 */
+            --bg-secondary: #16223f;      /* 안정적인 면접실/실험실 분위기를 조성하는 짙은 네이비 */
+            --text-main: #f8fafc;         /* 가독성이 검증된 최고 등급 미색 */
+            --text-muted: #94a3b8;        /* 시각적 인지 부하를 줄여주는 뮤티드 그레이 */
+            --accent-gold: #c5a880;       /* 전통의 깊이와 고급 감각을 더하는 샴페인 안틱 골드 */
+            --accent-bronze: #a3845b;     /* 보조 브론즈 골드 */
+            --accent-teal: #0f766e;       /* 분석과 이성적 판단을 이끄는 전문적인 딥 틸 블루 */
+            --accent-rose: #9f1239;       /* 경고 및 집중 관리를 위한 딥 로즈 레드 */
+            --card-border: rgba(197, 168, 128, 0.2);
+            --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family) !important; /* 모든 요소의 서체를 프레텐다드로 강제 통일 */
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            padding: 45px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1.5px solid var(--card-border);
+            padding-bottom: 35px;
+        }
+
+        header h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--accent-gold);
+            letter-spacing: -0.75px;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group select {
+            background: #090d16;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 14px;
+            color: var(--text-main);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.15);
+        }
+
+        .progress-container {
+            margin-bottom: 35px;
+            background: #090d16;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-bronze), var(--accent-gold));
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-card {
+            background: #0f182c;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 25px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(197, 168, 128, 0.25);
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+        }
+
+        .options-group {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #090d16;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            border-radius: 10px;
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--text-main);
+        }
+
+        .option-btn.selected {
+            background: var(--accent-gold);
+            color: #0b132a;
+            font-weight: 700;
+            border-color: var(--accent-gold);
+            box-shadow: 0 4px 15px rgba(197, 168, 128, 0.3);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 35px;
+            gap: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-bronze), var(--accent-gold));
+            color: #0b132a;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(197, 168, 128, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #090d16;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-main);
+            border-color: var(--text-muted);
+        }
+
+        .result-layout {
+            display: none;
+        }
+
+        .result-block {
+            background: #0f182c;
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+        }
+
+        .result-block h3 {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
+            border-bottom: 1.5px solid rgba(197, 168, 128, 0.15);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chart-wrapper {
+            margin-bottom: 30px;
+        }
+
+        .chart-row {
+            margin-bottom: 20px;
+        }
+
+        .chart-label-group {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .chart-bar-bg {
+            background: #090d16;
+            border-radius: 8px;
+            height: 18px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--accent-teal), #14b8a6);
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .saju-elements-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .element-card {
+            padding: 16px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .elem-wood { background: #133c30; color: #6ee7b7; }
+        .elem-fire { background: #581c0c; color: #ffedd5; }
+        .elem-earth { background: #5c2c16; color: #fef3c7; }
+        .elem-metal { background: #334155; color: #f1f5f9; }
+        .elem-water { background: #172554; color: #dbeafe; }
+
+        .mystic-quote {
+            font-style: italic;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 30px 0;
+            line-height: 1.8;
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 20px;
+            font-size: 15px;
+        }
+
+        .bold-lead {
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .desc-text {
+            color: #cbd5e1;
+            font-size: 15.5px;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .retake-area {
+            text-align: center;
+            margin-top: 45px;
+        }
+
+        .retake-area .btn {
+            display: inline-flex;
+            width: auto;
+            min-width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>☯️ 업무적성 x 사주 명리학 종합 진단</h1>
+        <p>현대 심리 이론인 홀랜드 직업적성 유형과 동양 전통 명리학의 조화를 통합 분석합니다.</p>
+        <p>⚠ 본 검사는 학술적 연구에 기반하고 있으나, 의학적 근거로 사용될 수 없으며, 법적 효력이 없습니다. ⚠</p>
+    </header>
+
+    <!-- STEP 1: 인적 사항 & 생년월일시 입력 -->
+    <div id="step-info" class="wizard-step">
+        <h2 class="section-title"><i class="fa-solid fa-compass"></i> 1단계: 진단 정보 입력</h2>
+        <div class="info-grid">
+            <div class="form-group">
+                <label for="userName">성명 / 닉네임</label>
+                <input type="text" id="userName" placeholder="성함 입력">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">생년월일</label>
+                <input type="date" id="birthDate">
+            </div>
+            <div class="form-group">
+                <label for="birthTime">출생시</label>
+                <select id="birthTime">
+                    <option value="0">모름 (일주 분석 중심)</option>
+                    <option value="1">자시 (23:30 ~ 01:29)</option>
+                    <option value="2">축시 (01:30 ~ 03:29)</option>
+                    <option value="3">인시 (03:30 ~ 05:29)</option>
+                    <option value="4">묘시 (05:30 ~ 07:29)</option>
+                    <option value="5">진시 (07:30 ~ 09:29)</option>
+                    <option value="6">사시 (09:30 ~ 11:29)</option>
+                    <option value="7">오시 (11:30 ~ 13:29)</option>
+                    <option value="8">미시 (13:30 ~ 15:29)</option>
+                    <option value="9">신시 (15:30 ~ 17:29)</option>
+                    <option value="10">유시 (17:30 ~ 19:29)</option>
+                    <option value="11">술시 (19:30 ~ 21:29)</option>
+                    <option value="12">해시 (21:30 ~ 23:29)</option>
+                </select>
+            </div>
+        </div>
+        <div class="btn-container">
+            <div></div> <!-- Spacer -->
+            <button class="btn btn-primary" onclick="startSurvey()">적성진단 시작하기 <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 2: 50문항 인터랙티브 설문 에이전트 -->
+    <div id="step-survey" class="wizard-step" style="display: none;">
+        <div class="progress-container">
+            <div class="progress-bar" id="surveyProgressBar"></div>
+        </div>
+        <h2 class="section-title" id="surveyStepTitle">진단 문항 진행중</h2>
+        <div id="quizContainer"></div>
+        <div class="btn-container">
+            <button class="btn btn-secondary" id="btnPrev" onclick="prevPage()"><i class="fa-solid fa-chevron-left"></i> 이전</button>
+            <button class="btn btn-primary" id="btnNext" onclick="nextPage()">다음 <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 3: 고도로 상세화된 다면 분석 보고서 -->
+    <div id="step-result" class="result-layout">
+        <header>
+            <h1 style="color: var(--accent-gold);"><i class="fa-solid fa-scroll"></i> 종합 직무 및 명조 진단서</h1>
+            <p id="resultMetaInfo" style="font-size: 15px;"></p>
+        </header>
+
+        <!-- 1. 학술적 적성 분석 리포트 -->
+        <div class="result-block">
+            <h3><i class="fa-solid fa-chart-simple"></i> [학술적 분석] 홀랜드 적성 스펙트럼 (RIASEC)</h3>
+            <div class="chart-wrapper">
+                <!-- R -->
+                <div class="chart-row">
+                    <div class="chart-label-group">
+                        <span>실제형 (Realistic) - 실제 가동 및 실물 제어 성향</span>
+                        <span id="scoreText_R">0점 / 100</span>
+                    </div>
+                    <div class="chart-bar-bg">
+                        <div class="chart-bar-fill" id="bar_R"></div>
+                    </div>
+                </div>
+                <!-- I -->
+                <div class="chart-row">
+                    <div class="chart-label-group">
+                        <span>탐구형 (Investigative) - 연구 개발 및 논리 분석 성향</span>
+                        <span id="scoreText_I">0점 / 100</span>
+                    </div>
+                    <div class="chart-bar-bg">
+                        <div class="chart-bar-fill" id="bar_I"></div>
+                    </div>
+                </div>
+                <!-- A -->
+                <div class="chart-row">
+                    <div class="chart-label-group">
+                        <span>예술형 (Artistic) - 창작 및 비정형 상상력 표현 성향</span>
+                        <span id="scoreText_A">0점 / 100</span>
+                    </div>
+                    <div class="chart-bar-bg">
+                        <div class="chart-bar-fill" id="bar_A"></div>
+                    </div>
+                </div>
+                <!-- S -->
+                <div class="chart-row">
+                    <div class="chart-label-group">
+                        <span>사회형 (Social) - 타인 교육, 지원 및 조율 성향</span>
+                        <span id="scoreText_S">0점 / 100</span>
+                    </div>
+                    <div class="chart-bar-bg">
+                        <div class="chart-bar-fill" id="bar_S"></div>
+                    </div>
+                </div>
+                <!-- E -->
+                <div class="chart-row">
+                    <div class="chart-label-group">
+                        <span>진취형 (Enterprising) - 비즈니스 개척, 설득 및 리더십 성향</span>
+                        <span id="scoreText_E">0점 / 100</span>
+                    </div>
+                    <div class="chart-bar-bg">
+                        <div class="chart-bar-fill" id="bar_E"></div>
+                    </div>
+                </div>
+                <!-- C -->
+                <div class="chart-row">
+                    <div class="chart-label-group">
+                        <span>관습형 (Conventional) - 정밀 기록, 무결성 검증 및 리스크 제어 성향</span>
+                        <span id="scoreText_C">0점 / 100</span>
+                    </div>
+                    <div class="chart-bar-bg">
+                        <div class="chart-bar-fill" id="bar_C"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 최고 적성 유형에 대한 구체적인 정성 설명 -->
+            <div id="academicDetailedDesc" style="margin-top: 25px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 20px;">
+                <!-- 동적 스크립팅 주입 -->
+            </div>
+        </div>
+
+        <!-- 2. 명리학적 오행 및 음양 분석 리포트 -->
+        <div class="result-block">
+            <h3><i class="fa-solid fa-yin-yang"></i> [명리학적 분석] 사주 음양오행 및 기질 분석</h3>
+            <div class="saju-elements-grid">
+                <div class="element-card elem-wood" id="saju_wood">木: --%</div>
+                <div class="element-card elem-fire" id="saju_fire">火: --%</div>
+                <div class="element-card elem-earth" id="saju_earth">土: --%</div>
+                <div class="element-card elem-metal" id="saju_metal">金: --%</div>
+                <div class="element-card elem-water" id="saju_water">水: --%</div>
+            </div>
+            
+            <p id="sajuYinYangText" style="font-weight: 600; color: var(--accent-gold); margin-bottom: 20px; text-align: center; font-size: 17px;"></p>
+            <div id="sajuDetailedDesc">
+                <!-- 동적 스크립팅 주입 -->
+            </div>
+        </div>
+
+        <!-- 3. 종합 결론 및 제언 -->
+        <div class="result-block" style="border: 1px solid var(--accent-gold); background: #131c33;">
+            <h3><i class="fa-solid fa-shuffle"></i> [상조 혹은 상충] 적성과 사주의 조화로운 타협</h3>
+            <div id="crossCrossoverAnalysis">
+                <!-- 동적 스크립팅 주입 -->
+            </div>
+        </div>
+
+        <!-- 검사 다시하기 버튼 단독 배치 -->
+        <div class="retake-area">
+            <button class="btn btn-primary" onclick="resetAllState()"><i class="fa-solid fa-rotate-left"></i> 테스트 다시하기</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 50문항 데이터 정의 (R, I, A, S, E, C 총 50문항 완벽한 비중 분포)
+    const questions = [
+        { id: 1, type: "R", text: "정밀 기술을 다루거나 기계 설비 등의 하드웨어를 분해하고 수리하는 활동에 부합합니까?" },
+        { id: 2, type: "I", text: "원인이 불명확한 현상이나 데이터 세트를 만났을 때 끝까지 논리적으로 인과관계를 밝히고자 합니까?" },
+        { id: 3, type: "A", text: "사전 합의된 규칙이나 가이드라인 없이 순수 기획력과 개성적인 관점으로 독창적인 창작물을 만들기를 선호합니까?" },
+        { id: 4, type: "S", text: "조직이나 주변 내에서 이해 당사자들의 충돌이 발생했을 때 합리적으로 중재하는 역할에 흥미를 느낍니까?" },
+        { id: 5, type: "E", text: "상대를 비즈니스적, 논리적으로 설득하여 정량적 실적과 계약을 성사하는 추진력을 가지고 계십니까?" },
+        { id: 6, type: "C", text: "세부 수치나 공적 지표, 엄밀한 규격에 맞추어 완결성을 책임져야 하는 행정 실무에 강점이 있습니까?" },
+        { id: 7, type: "R", text: "제작 구상도와 도구를 바탕으로 실물 시스템이나 부품을 직접 제작/설치하는 실무에 보람을 느낍니까?" },
+        { id: 8, type: "I", text: "체계적인 이론을 수립하거나 전문적인 학문 자료를 비교 및 요약하여 문서를 설계하는 일이 매끄럽습니까?" },
+        { id: 9, type: "A", text: "공간 인테리어, 뉴미디어 비주얼, 그래픽 등 시각적/감성적 차별성을 제시하는 아이디어가 풍부합니까?" },
+        { id: 10, type: "S", text: "타인의 성장을 돕는 상담, 코칭, 교육, 혹은 어시스턴트로써 안정성을 높여주는 일이 편안합니까?" },
+        { id: 11, type: "E", text: "공격적인 성과 목표를 지향하거나, 불확실한 시장 개척 업무에 앞장서는 역할을 지향합니까?" },
+        { id: 12, type: "C", text: "기업이나 조직의 자금 흐름, 조세 정합성을 세밀하게 감사하고 정돈하는 분야에 자신 있습니까?" },
+        { id: 13, type: "R", text: "안정적인 데스크 업무보다는, 현장에 투입되어 하드웨어 및 운영 인프라를 지휘하는 것에 매력을 느낍니까?" },
+        { id: 14, type: "I", text: "복잡한 시스템 분석 및 알고리즘 개발을 주도하거나, 데이터의 원리를 규명하는 과정을 선호합니까?" },
+        { id: 15, type: "A", text: "정형화된 업무 조직 체계 속을 벗어나, 자율도가 높은 독립적인 프리랜서 라이프가 더 적절합니까?" },
+        { id: 16, type: "S", text: "공익과 이타주의를 우선시하는 사회 공헌 또는 휴먼 터치 서비스를 구상할 때 큰 보람을 느낍니까?" },
+        { id: 17, type: "E", text: "스타트업을 창업하거나 대규모 이벤트를 기획하여 대중과 투자자들에게 프리젠테이션하고 포섭하는 과정에 즐거움을 얻습니까?" },
+        { id: 18, type: "C", text: "위험을 선제적으로 예방하기 위해 표준 매뉴얼과 정합성 검토 프로세스를 정립하는 일을 우선시합니까?" },
+        { id: 19, type: "R", text: "물리적 자재 설계, 가공 제어 등 동적 기계 운용 관련 지식과 역량을 갖추고 계십니까?" },
+        { id: 20, type: "I", text: "수학적 추정, 통계 모델, 인문과학 분야 연구 보고서 작성을 즐거운 탐구로 생각하십니까?" },
+        { id: 21, type: "A", text: "브랜딩 패키지 설계, 감성적인 공간 테마 디렉팅 등 디자인과 연출 영역에 적극적으로 몰입합니까?" },
+        { id: 22, type: "S", text: "사내 인적 개발(HRD), 조직 문화 개선을 위한 워크숍 설계 등 대인 관계 지향적 업무에 부합합니까?" },
+        { id: 23, type: "E", text: "기업의 실적 성장을 담당하는 기술영업, 글로벌 세일즈, 또는 사업 개발 실무에서 주도적 역량을 발휘합니까?" },
+        { id: 24, type: "C", text: "대량의 데이터 세트를 체계적 분류 기준에 입각해 정밀하게 기록 및 검증하는 일에 특기가 있습니까?" },
+        { id: 25, type: "R", text: "직접 실험 기기를 세팅하고 현장 데이터를 하드웨어 기기로 실측하는 정교한 작업에 적합합니까?" },
+        { id: 26, type: "I", text: "정황적 주장보다, 명확한 객관적 팩트 체크와 실험적 논증 결과를 압도적으로 중시하십니까?" },
+        { id: 27, type: "A", text: "미술, 영상, 사운드 등 고유한 표현 방식을 기획하여 대중에게 충격을 줄 수 있는 시각을 공유하십니까?" },
+        { id: 28, type: "S", text: "상호 협력과 깊이 있는 소통을 통해 프로젝트 팀 내부에 정서적인 안정감을 고취할 수 있습니까?" },
+        { id: 29, type: "E", text: "사람들을 리드하여 지연된 일정과 부딪힌 난관을 공격적인 의사결정으로 돌파한 자취를 가지고 계십니까?" },
+        { id: 30, type: "C", text: "사규 및 공적 법령에 기초하여 회사의 정보 보안, 데이터의 이상 유무를 점검하는 역할에 어울립니까?" },
+        { id: 31, type: "R", text: "전기 및 정보통신 배선, 공구 등 장비 구성을 실무 단위에서 안전하게 제어하는 기술을 좋아합니까?" },
+        { id: 32, type: "I", text: "학술 연구 논문의 허점을 파고들어 이론의 모순점을 지적하는 비평적 사고에 탁월하십니까?" },
+        { id: 33, type: "A", text: "스토리텔링 구상, 미학적 구도 연출을 실현하며 오랜 시간 고도의 몰입을 경험한 적이 있습니까?" },
+        { id: 34, type: "S", text: "서비스의 정량적 성과보다, 고객과의 대화를 통해 근원적 불만 요소를 해결하고 어루만지는 활동에 보람이 큽니까?" },
+        { id: 35, type: "E", text: "글로벌 파트너와의 비즈니스 매칭 조율, VIP 전담 비서 역할처럼 고도의 대외 협조를 기획할 역량이 충분합니까?" },
+        { id: 36, type: "C", text: "복잡한 세무 행정 표준이나 기업 법률 자격 요건을 파악해 행정을 정밀하게 운영하는 편이 좋습니까?" },
+        { id: 37, type: "R", text: "모형 제작, 원자재 물류 제어 시스템과 같은 시뮬레이션 하드웨어를 만질 때 안심을 느끼십니까?" },
+        { id: 38, type: "I", text: "시장 경향성 통계 데이터를 이용해 수학적 수식을 설계하거나 머신러닝 코드를 기획하고 싶습니까?" },
+        { id: 39, type: "A", text: "업계 관행에 연연치 않고 온전히 자신만의 철학과 예술적 지향점을 구현하는 독립적인 활동을 동경합니까?" },
+        { id: 40, type: "S", text: "조직 내의 보편적 가치와 공정성을 수호하기 위해 복지 혜택 및 심리 카운슬링을 구축하는 프로젝트를 원하십니까?" },
+        { id: 41, type: "E", text: "업무 최선두에서 강력한 성과 연동 보상을 쟁취하며 업계 최고의 가치를 입증하는 전투를 원하십니까?" },
+        { id: 42, type: "C", text: "불확실한 시장 위험에 노출되지 않도록 전산 정보 보존과 감사 역할을 도맡는 것에 긍정적이십니까?" },
+        { id: 43, type: "R", text: "최신 무인 로보틱스, 무인 드론 기기 세팅 및 메인터넌스 작업을 수월하게 처리하십니까?" },
+        { id: 44, type: "I", text: "우주의 물리 법칙이나 다각적 논리 매칭 시스템의 작동 구조를 파헤치는 정신적 활동을 지향합니까?" },
+        { id: 45, type: "A", text: "타인을 경이롭게 만드는 시각 테마 설정, 새로운 상징 표현에 집중하며 아이디어를 개발합니까?" },
+        { id: 46, type: "S", text: "팀원들이 각자의 능력을 유감없이 개화하도록 교육하거나 가이드해주는 멘토 성향을 선호하십니까?" },
+        { id: 47, type: "E", text: "기업의 가치를 높여 주주들 앞에서 성과를 과시하거나, 투자를 공격적으로 유치하는 역할을 바랍니까?" },
+        { id: 48, type: "C", text: "계약서상 명시된 조건과 실무 결과가 정확히 대치하는지 사후 감사 업무를 철저히 관리할 자신이 있습니까?" },
+        { id: 49, type: "E", text: "글로벌 상위 경쟁사들을 실력으로 앞서는 독점적 비즈니스 협상을 성사해 쾌감을 달성하고 싶습니까?" },
+        { id: 50, type: "A", text: "세상의 보편적 가치에서 벗어나 유니크한 세계관을 표현하는 작가, 디렉터로서 가치관을 관철하겠습니까?" }
+    ];
+
+    // 응답 저장을 위한 변수
+    let userAnswers = {};
+    let currentPage = 0;
+    const itemsPerPage = 10;
+    const totalPages = Math.ceil(questions.length / itemsPerPage);
+
+    const countByType = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+    questions.forEach(q => countByType[q.type]++);
+
+    function startSurvey() {
+        const userName = document.getElementById("userName").value.trim();
+        const birthDate = document.getElementById("birthDate").value;
+
+        if (!userName) {
+            alert("진행을 위해 이름 또는 닉네임을 입력해 주십시오.");
+            return;
+        }
+        if (!birthDate) {
+            alert("생년월일을 선택해 주십시오.");
+            return;
+        }
+
+        document.getElementById("step-info").style.display = "none";
+        document.getElementById("step-survey").style.display = "block";
+        
+        renderQuizPage();
+    }
+
+    function renderQuizPage() {
+        const startIdx = currentPage * itemsPerPage;
+        const endIdx = Math.min(startIdx + itemsPerPage, questions.length);
+        const container = document.getElementById("quizContainer");
+        container.innerHTML = "";
+
+        document.getElementById("surveyStepTitle").innerHTML = `<i class="fa-solid fa-file-invoice"></i> 문항 진단 (${startIdx + 1} ~ ${endIdx} / ${questions.length})`;
+
+        const progressPercent = Math.round((startIdx / questions.length) * 100);
+        document.getElementById("surveyProgressBar").style.width = `${progressPercent}%`;
+
+        for (let i = startIdx; i < endIdx; i++) {
+            const q = questions[i];
+            const savedValue = userAnswers[q.id] || 3; // 기본값: 보통이다 (3)
+
+            const qCard = document.createElement("div");
+            qCard.className = "question-card";
+
+            const qText = document.createElement("div");
+            qText.className = "question-text";
+            qText.innerText = `${q.id}. ${q.text}`;
+
+            const optGroup = document.createElement("div");
+            optGroup.className = "options-group";
+
+            const scoreLabels = [
+                { val: 1, label: "전혀 아님" },
+                { val: 2, label: "아님" },
+                { val: 3, label: "보통" },
+                { val: 4, label: "그럼" },
+                { val: 5, label: "매우 그럼" }
+            ];
+
+            scoreLabels.forEach(opt => {
+                const btn = document.createElement("div");
+                btn.className = `option-btn ${savedValue === opt.val ? 'selected' : ''}`;
+                btn.innerText = opt.label;
+                btn.onclick = () => {
+                    userAnswers[q.id] = opt.val;
+                    const siblings = optGroup.children;
+                    for (let sibling of siblings) {
+                        sibling.classList.remove("selected");
+                    }
+                    btn.classList.add("selected");
+                };
+                optGroup.appendChild(btn);
+            });
+
+            qCard.appendChild(qText);
+            qCard.appendChild(optGroup);
+            container.appendChild(qCard);
+        }
+
+        document.getElementById("btnPrev").style.visibility = (currentPage === 0) ? "hidden" : "visible";
+        if (currentPage === totalPages - 1) {
+            document.getElementById("btnNext").innerHTML = `종합 결과 추출 <i class="fa-solid fa-wand-magic-sparkles"></i>`;
+        } else {
+            document.getElementById("btnNext").innerHTML = `다음 <i class="fa-solid fa-chevron-right"></i>`;
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            renderQuizPage();
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+    }
+
+    function nextPage() {
+        const startIdx = currentPage * itemsPerPage;
+        const endIdx = Math.min(startIdx + itemsPerPage, questions.length);
+        for (let i = startIdx; i < endIdx; i++) {
+            const q = questions[i];
+            if (!userAnswers[q.id]) {
+                userAnswers[q.id] = 3; // 무응답 통과 보완
+            }
+        }
+
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            renderQuizPage();
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        } else {
+            generateDiagnosis();
+        }
+    }
+
+    function generateDiagnosis() {
+        document.getElementById("step-survey").style.display = "none";
+        document.getElementById("step-result").style.display = "block";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        const userName = document.getElementById("userName").value.trim() || "귀하";
+        const birthDate = document.getElementById("birthDate").value;
+        const birthTimeVal = parseInt(document.getElementById("birthTime").value);
+
+        // RIASEC 점수 계산 (각 영역별 100점 스케일)
+        const rawScores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+        questions.forEach(q => {
+            rawScores[q.type] += userAnswers[q.id] || 3;
+        });
+
+        const pctScores = {};
+        for (let type in rawScores) {
+            const maxPossible = countByType[type] * 5;
+            pctScores[type] = Math.round((rawScores[type] / maxPossible) * 100);
+        }
+
+        // RIASEC 차트 렌더링
+        for (let type in pctScores) {
+            document.getElementById(`scoreText_${type}`).innerText = `${pctScores[type]}점 / 100`;
+            setTimeout(() => {
+                const fillBar = document.getElementById(`bar_${type}`);
+                if(fillBar) fillBar.style.width = `${pctScores[type]}%`;
+            }, 100);
+        }
+
+        // 최우수 적성 타입 도출
+        let maxType = "R";
+        let maxVal = -1;
+        for (let type in pctScores) {
+            if (pctScores[type] > maxVal) {
+                maxVal = pctScores[type];
+                maxType = type;
+            }
+        }
+
+        const riasecDB = {
+            R: {
+                title: "실제형 (Realistic) - 구체적인 실천과 기계장치 수호자",
+                desc: "추상적인 이론이나 탁상의 설계에 갇히는 것을 거부하고, 물질적 수단과 첨단 기기를 손끝으로 제어할 때 고도의 안정성과 성과를 표명하는 정합형 자아입니다. 눈앞에 증명되는 하드웨어적 결과물의 가치를 신봉하며, 실제 운용 현장에서의 해결사 역할을 전담합니다.",
+                jobs: "정밀 기계공학 엔지니어, 공장 자동화 공정 디렉터, 로보틱스 하드웨어 설계자, 첨단 무인기 및 수송기 운용가, 필드 테크니컬 지원 전문가",
+                figures: "일론 머스크 (테슬라의 기계 공학적 집착), 장영실 (조선 최고 정밀 기계 발명가), 니콜라 테슬라 (교류 전기공학 구조의 설계자)"
+            },
+            I: {
+                title: "탐구형 (Investigative) - 깊은 인과관계와 논리적 진리 추적자",
+                desc: "방대한 데이터 세트와 숨겨진 자연 법칙, 혹은 비즈니스 매커니즘 속에 깃든 비밀을 파헤치는 명석하고 고집스러운 지성가입니다. 규격화된 수리 추정과 입증된 객관적 팩트를 논리적 무기로 사용하며, 고난도의 전략 수립과 순수 지식의 발전에 부합합니다.",
+                jobs: "데이터 사이언티스트, 제약 및 바이오 신약 개발 연구원, 투자 리스크 평가 통계학자, 사이버 정보 감식 및 보안 아키텍트, 거시 금융 애널리스트",
+                figures: "알베르트 아인슈타인 (상대성 이론 규명), 마리 퀴리 (정밀 원소 분석의 개척자), 리처드 파인만 (논리를 직관으로 헤집는 물리학 대가)"
+            },
+            A: {
+                title: "예술형 (Artistic) - 비정형 미학과 거침없는 비주얼 지휘가",
+                desc: "기존의 기계적인 가이드와 고리타분한 관습을 파괴하고, 오직 본인만의 지향점과 미학적 상징으로 독보적 브랜딩 가치를 설계하는 크리에이티브 혁신가입니다. 정적이고 정돈된 규칙에서 심리적 정체를 겪고, 한계가 모호한 자유도 속에서 폭발적인 잠재력을 발휘합니다.",
+                jobs: "크리에이티브 디렉터, 브랜드 스토리텔러 및 영상 기획자, 실내외 공간 연출가, 웹툰 및 미디어 아티스트, 독립 뉴미디어 아카이브 디자이너",
+                figures: "빈센트 반 고흐 (독자적 감각의 회화 거장), 스티브 잡스 (테크놀로지에 아방가르드 디자인을 녹인 혁신가), 봉준호 (사회적 구조를 프레임에 연출한 감독)"
+            },
+            S: {
+                title: "사회형 (Social) - 인간적 가치와 공익의 커뮤니케이션 조율사",
+                desc: "조직 내의 마찰을 치유하고 팀 구성원 각각의 최적 능력을 견인하며 이타적 성장에 이바지하는 인간 중심적 서포터입니다. 차가운 이윤이나 하드웨어 지향의 밀실에서 벗어나, 사람들과의 상호 관계 및 카운슬링을 이끌 때 최상의 내적 윤활유로 군림합니다.",
+                jobs: "사내 인적 자원 개발(HRD) 매니저, 고급 임원실 대외 비서 리더, 기업 심리 안전 테라피스트, 상호 소통 기반 커뮤니티 거버넌스 중재자",
+                figures: "오프라 윈프리 (미디어 소통과 경청의 대가), 마더 테레사 (이타주의적 휴먼 서포터), 유재석 (상대의 매력을 조화롭게 조율하는 협력형 사회자)"
+            },
+            E: {
+                title: "진취형 (Enterprising) - 불가능을 타개하는 야망의 비즈니스 전사",
+                desc: "타인의 가치관을 주도적으로 뒤흔들고 시장을 압도하여 성과와 보상을 획득하는 카리스마적 리더형입니다. 높은 리스크에 직면할수록 추진력을 발휘하는 전략가이며, 기술영업 및 마케팅의 최전선에서 결과로 자신의 존재 이유를 증명하는 강인한 체질입니다.",
+                jobs: "첨단 제조업 기술영업 디렉터, 글로벌 무역 마케팅 전문가, 벤처 스타트업 리드 파운더, 투자 유치(IR) 총괄, 비즈니스 디벨로퍼",
+                figures: "워런 버핏 (통찰력 넘치는 금융 가치 개척자), 마크 저커버그 (소셜 커넥션 제국 창설자), 백종원 (상권을 주도적으로 지배하는 비즈니스 개척자)"
+            },
+            CustomC: {
+                title: "관습형 (Conventional) - 무결점을 통제하는 수호 아키텍트",
+                desc: "사소한 수치와 절차적 실수가 기업을 파괴할 수 있음을 완벽히 자각하고, 구조화된 문서와 규정을 이용해 리스크를 원천 봉쇄하는 무결점의 가디언입니다. 오차 없는 데이터 대조와 완벽한 아카이빙 능력을 전개하여 조직의 튼튼한 안전망을 보증합니다.",
+                jobs: "기업 리스크 내부 감사, 공인 회계사 및 세무사, 전산 아카이빙 데이터 보존자, 품질 관리(QA) 검토 스페셜리스트, 사규 관리 행정직원",
+                figures: "장 칼뱅 (철저한 교리와 규례의 아키텍트), 정약용 (정합적 법률 지서 '흠흠신서' 저술가), 셜록 홈즈 (현장 관찰과 완벽한 행정 기록 중심의 탐정)"
+            }
+        };
+
+        const currentRIASEC = (maxType === "C") ? riasecDB.CustomC : riasecDB[maxType];
+
+        let academicHTML = `
+            <div class="bold-lead" style="font-size: 19px; color: var(--accent-gold); margin-bottom: 12px;">
+                최우수 진단 적성 유형: ${currentRIASEC.title}
+            </div>
+            <p class="desc-text">${currentRIASEC.desc}</p>
+            <div class="bold-lead"><i class="fa-solid fa-briefcase"></i> 추천 진무 스펙트럼</div>
+            <p class="desc-text" style="color: var(--accent-gold); font-weight: 600;">${currentRIASEC.jobs}</p>
+            <div class="bold-lead"><i class="fa-solid fa-users"></i> 이 적성 유형을 대표하는 시대적 인물</div>
+            <p class="desc-text" style="font-style: italic; color: var(--text-muted);">${currentRIASEC.figures}</p>
+        `;
+        document.getElementById("academicDetailedDesc").innerHTML = academicHTML;
+
+        // 명리학적 분석 (음양오행 연산)
+        let seed = 0;
+        for (let i = 0; i < birthDate.length; i++) {
+            if (!isNaN(birthDate[i])) seed += parseInt(birthDate[i]);
+        }
+        seed += birthTimeVal;
+
+        const yinYangType = (seed % 2 === 0) ? "극음(極陰)의 명조 - 심지가 주밀하고 정밀하게 안을 다스린다" : "태양(太陽)의 명조 - 발산하며 세상을 환하게 주도한다";
+        const yinYangMysticDesc = (seed % 2 === 0) 
+            ? "귀하는 겉으로는 차분하고 침착해 보이나 내면에는 매서운 결단력의 얼음칼을 품은 음(陰)의 명조입니다. 불필요한 대외 소모를 배제하고 실속을 단단하게 쥐는 자아로써, 기운이 한쪽으로 극단화되면 스스로 고립을 자처할 수 있는 냉엄함이 있습니다."
+            : "귀하는 뿜어져 나오는 열기와 외부로 표명하는 에너지가 강력하여, 환경을 자신의 기운으로 물들여야 만족하는 양(陽)의 기질입니다. 가동력이 매우 크나, 스스로의 울화통과 화기(火氣) 조절에 유의해야 영적인 원활함을 가질 수 있습니다.";
+
+        document.getElementById("sajuYinYangText").innerText = `☯️ ${yinYangType}`;
+
+        const elemRatios = [10, 15, 20, 25, 30];
+        const shuffledRatios = [];
+        let tempSeed = seed;
+        const tempRatios = [...elemRatios];
+        while (tempRatios.length > 0) {
+            const idx = tempSeed % tempRatios.length;
+            shuffledRatios.push(tempRatios.splice(idx, 1)[0]);
+            tempSeed = Math.floor(tempSeed / 2);
+        }
+
+        const elementsData = [
+            { name: "木", label: "목(木) 기운 - 창조와 무한 성장의 활력", value: shuffledRatios[0], colorClass: "elem-wood", desc: "단단한 동토를 뚫고 솟구치는 어린 새싹의 생명력입니다. 업무적 기획, 전무후무한 크리에이티브 창작, 무(無)에서 유(有)를 빚는 예술가적 추진력을 책임집니다." },
+            { name: "火", label: "화(火) 기운 - 정열적인 발산과 대외 소통의 빛", value: shuffledRatios[1], colorClass: "elem-fire", desc: "자신을 온 세상에 널리 표명하여 타인을 사로잡는 뜨거움입니다. 미디어 노출, 대외 세일즈, 마케팅 전략, 투자 유치 프레젠테이션처럼 화려한 무대 기질을 활성화합니다." },
+            { name: "土", label: "토(土) 기운 - 두터운 신용과 중재력의 대지", value: shuffledRatios[2], colorClass: "elem-earth", desc: "모든 오행을 품어주고 조화롭게 상생을 이루는 너그러운 흙입니다. 백오피스의 정밀 제어, VIP 보좌 및 비서 임무, 사내 HR 갈등 조율 등 무한한 보살핌의 역량을 선사합니다." },
+            { name: "金", label: "금(金) 기운 - 서슬 퍼런 결단과 숙살(肅殺)의 가위", value: shuffledRatios[3], colorClass: "elem-metal", desc: "불순물을 가차 없이 잘라내어 극도의 완성도를 세우는 쇳소리입니다. 품질 감사, 예산의 입증, 정밀 기계 엔지니어링, 하드웨어 작동 및 감사 직책에 강력한 엄격함을 부여합니다." },
+            { name: "水", label: "수(水) 기운 - 유려한 지혜와 심원한 탐구의 깊이", value: shuffledRatios[4], colorClass: "elem-water", desc: "세상의 보이지 않는 모든 고랑을 흘러들어 본질을 밝히는 차가운 물입니다. 거시 데이터 마이닝, 장기적 분석 연구, 기업 전산 아카이빙 구축 및 연구 개발에 고도의 이성을 선사합니다." }
+        ];
+
+        elementsData.forEach((el, index) => {
+            const elemUI = document.getElementById(`saju_${["wood", "fire", "earth", "metal", "water"][index]}`);
+            if (elemUI) {
+                elemUI.innerText = `${el.name}: ${el.value}%`;
+            }
+        });
+
+        let maxElem = elementsData[0];
+        elementsData.forEach(el => {
+            if (el.value > maxElem.value) maxElem = el;
+        });
+
+        let sajuHTML = `
+            <p class="desc-text" style="border-bottom: 1.5px solid rgba(255,255,255,0.05); padding-bottom: 20px;">${yinYangMysticDesc}</p>
+            <div class="bold-lead" style="color: var(--accent-gold); font-size: 18px;"><i class="fa-solid fa-moon"></i> 타고난 지배적 제1 기운: ${maxElem.label}</div>
+            <p class="desc-text">${maxElem.desc}</p>
+            
+            <div class="mystic-quote">
+                "천명의 성정이 가리키길, 사람은 각자 소용을 가질 뿐 무용한 생은 없다 하였습니다.<br> 
+                진로의 사막을 지날 때 가까이 취해야 할 '길(吉)의 비방'과, 액운처럼 피해야 할 '살(煞)의 경고'가 있으니 이를 필히 마음에 각인하소서."
+            </div>
+
+            <div class="bold-lead" style="color: #2dd4bf;"><i class="fa-solid fa-square-plus"></i> 명리의 길(吉): 당신을 활짝 개개할 비방</div>
+            <p class="desc-text" style="background: rgba(15,118,110,0.15); padding: 16px; border-radius: 10px; border-left: 4px solid var(--accent-teal);">
+                귀하의 천기를 이롭게 하려면 ${maxElem.name}의 주체적인 역량을 기꺼이 긍정해야 합니다. 
+                업무 공간을 이 기운에 대치되는 실물 소품(식물, 금속, 푸른 조명 등)으로 지키시고, 조직 내에서 기운이 막힐 때는 상충하는 상사의 지시를 억지로 맞받아치기보다 유유히 흐르는 물처럼 한 걸음 우회하는 지혜를 보완하셔야 대운(大運)의 장막이 활짝 걷힙니다.
+            </p>
+
+            <div class="bold-lead" style="color: #f43f5e;"><i class="fa-solid fa-skull-crossbones"></i> 명리의 액(厄): 수호하기 위해 기피해야 할 상황</div>
+            <p class="desc-text" style="background: rgba(159,18,57,0.15); padding: 16px; border-radius: 10px; border-left: 4px solid var(--accent-rose);">
+                만일 귀하가 자신의 천적 기질과 무관한 '독단적 상사의 통제' 혹은 '사소한 오차를 용납하지 않는 정적이고 밀폐된 방'에 오래 갇히게 된다면, 
+                사주 상에 잠든 진로 일주의 동토(凍土)가 활성화되어 극심한 울화, 무기력, 혹은 가슴 졸임에 이르는 기운의 훼손을 겪게 됩니다. 부당한 사슬은 재빠르게 우회하고 탈피하는 것이 스스로의 건강을 영위하는 천금의 비법입니다.
+            </p>
+        `;
+        document.getElementById("sajuDetailedDesc").innerHTML = sajuHTML;
+
+        // 종합 결론 및 제언 (상조 vs 상충 매칭 구조)
+        let matchStatus = "상조 (서로 보완하며 원만하게 전진하는 운명)";
+        let isHarmonized = true;
+
+        if ((maxType === "C" || maxType === "R") && maxElem.name === "火") {
+            matchStatus = "상충 (차갑고 고요한 수호 기질이 뜨거운 기운과 부딪히는 양면성)";
+            isHarmonized = false;
+        } else if (maxType === "A" && (maxElem.name === "金" || maxElem.name === "土")) {
+            matchStatus = "상충 (자유로운 영혼의 가치가 단단한 무쇠 감옥에 구속되는 불일치)";
+            isHarmonized = false;
+        } else if (maxType === "E" && maxElem.name === "水") {
+            matchStatus = "상충 (타오르는 돌격 리더십이 심해의 깊은 지성과 마찰을 빚는 혼합형)";
+            isHarmonized = false;
+        }
+
+        let crossHTML = "";
+        if (isHarmonized) {
+            crossHTML = `
+                <div class="bold-lead" style="font-size: 19px; color: var(--accent-gold); text-align: center; margin-bottom: 20px;">
+                    🎯 [화합지상] 학술 적성 [${maxType}] x 사주 기운 [${maxElem.name}] = ${matchStatus}
+                </div>
+                <p class="desc-text">
+                    귀하의 타고난 직업 적성 스펙트럼과 우주가 부여한 천강의 사주 기운이 아름답게 화답하여 한 방향을 응시하고 있습니다. 
+                    이는 인생사에서 진로 개척의 큰 불화나 의심 없이, 자신이 설정한 전문 분야에 매진할수록 비약적인 영전과 성취를 거머쥐는 축복의 기운입니다.
+                </p>
+                <div class="bold-lead" style="color: var(--accent-gold);"><i class="fa-solid fa-award"></i> 현재 천직(예: 비즈니스, 기계 및 기술 계통)의 길을 걷고 있다면?</div>
+                <p class="desc-text" style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                    <strong>[보강 비책]</strong> 지금 귀하가 영위하는 커리어는 심리적으로도, 명조상으로도 완벽한 합을 보입니다! 
+                    다만 순탄하게 잘 풀려나간 탓에 인생 삼재나 의외의 기후 변화(구조 조정, 산업의 종말 등)에 대응하는 회복 탄력성이 다소 아쉬울 수 있습니다. 
+                    자신의 전문 분야 외에 주 1회 가량은 감성을 보완하는 인문 예술, 기발한 취미 등을 병행하여 영적인 스펙트럼의 내구성을 확장해 놓으면 대운의 안정성이 백년토록 유지됩니다.
+                </p>
+                <div class="bold-lead" style="color: var(--accent-gold);"><i class="fa-solid fa-arrows-split-up-and-left"></i> 현재 적성과 무관한 엉뚱한 길을 걷고 있다면?</div>
+                <p class="desc-text" style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                    <strong>[명조의 조언]</strong> 원래 귀한 천명이 예정되어 있으나 억압된 생활(부모의 압박, 물질적 노예 계약, 관습에 대한 맹목 등)로 인해 이도(異途 - 엉뚱한 길)에서 수명을 소모하고 계실 공산이 큽니다. 
+                    더 늦기 전에, 본인이 진정으로 갈망하던 최우수 홀랜드 유형에 입각한 부업, 소규모 프리랜서 작업을 수면 위로 올리셔야 합니다. 사소한 시도가 사주의 물꼬를 터 영적으로 풍성히 회복될 것입니다.
+                </p>
+            `;
+        } else {
+            crossHTML = `
+                <div class="bold-lead" style="font-size: 19px; color: #f43f5e; text-align: center; margin-bottom: 20px;">
+                    💥 [반전지상] 학술 적성 [${maxType}] x 사주 기운 [${maxElem.name}] = ${matchStatus}
+                </div>
+                <p class="desc-text">
+                    경이롭게도, 머리로 이해하는 최우수 직업 적성의 틀과 영혼 깊숙이 내장된 사주 지배적 기운이 정반대 방향으로 충돌을 빚고 있습니다. 
+                    하지만 실망하거나 절망할 필요가 일절 없습니다. 이는 역사적 거장들이 흔히 가졌던 '반전의 격조(異途大成)' 사주로써, 두 모순적인 매커니즘을 융합했을 때 필멸의 독보적인 권위를 쟁취할 격조 높은 귀격입니다.
+                </p>
+                <div class="bold-lead" style="color: var(--accent-gold);"><i class="fa-solid fa-award"></i> 현재 전형적인 회사원이나 영업, 혹은 관습적인 행정의 길을 걷고 있다면?</div>
+                <p class="desc-text" style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                    <strong>[보강 비책]</strong> 귀하는 낮에는 이성적이고 정교한 비즈니스 협상 전사 혹은 기계의 관리자로 완벽히 기능하지만, 밤이 되면 내면 깊숙이서 타오르는 예술적 불꽃이나 심해의 고독을 직면할 것입니다. 
+                    이 간극을 메우려면 현재의 일에 본인 고유의 '디자인적 안목' 혹은 '사람의 심리를 보살피는 상담 기법'을 하이브리드로 적용하십시오. 
+                    누구도 복제하지 못하는 귀하만의 유일무이한 융합 포지션을 선점해 고액 자산가의 격을 획득할 것입니다.
+                </p>
+                <div class="bold-lead" style="color: var(--accent-gold);"><i class="fa-solid fa-arrows-split-up-and-left"></i> 현재 적성과 무관한 방황을 겪고 있다면?</div>
+                <p class="desc-text" style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                    <strong>[명조의 조언]</strong> 머리는 완벽한 규칙과 철저한 안전지대를 외치지만 발걸음은 본능을 따라 자유롭게 춤을 추며 소모적 불협화음을 자아냅니다. 
+                    당장 생업을 박차고 나가는 무모함은 피하되 '낮에는 행정과 기술영업으로 현실적 실속을 도모하고, 저녁에는 내면의 천명을 일깨우는 창작과 지혜의 독자 영역을 빌딩하는 이중 설계(Dual-Track)'에 적응하십시오. 
+                    양쪽 기운을 모순 없이 고루 활용하는 균형 자체가 귀하의 운명을 치유하는 최고의 보약입니다.
+                </p>
+            `;
+        }
+        document.getElementById("crossCrossoverAnalysis").innerHTML = crossHTML;
+
+        const ageMsg = birthDate ? `${birthDate} 태생` : "알 수 없음";
+        document.getElementById("resultMetaInfo").innerHTML = `
+            <strong>${userName}</strong> 님의 영적·학술적 다면 감정 리포트 
+            <span style="color: var(--accent-gold); margin-left: 10px;">(${ageMsg})</span>
+        `;
+    }
+
+    function resetAllState() {
+        userAnswers = {};
+        currentPage = 0;
+        document.getElementById("userName").value = "";
+        document.getElementById("birthDate").value = "";
+        document.getElementById("birthTime").value = "0";
+
+        document.getElementById("step-result").style.display = "none";
+        document.getElementById("step-info").style.display = "block";
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+</script>
+
+</body>
+</html>
